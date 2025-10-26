@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Love Quest — Rouge & Ivie 💕</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="hearts" id="hearts" aria-hidden="true"></div>
+
+  <main class="container" id="game" role="main" aria-live="polite">
+    <header class="head">
+      <h1>Love Quest</h1>
+      <h2>Rouge ❤ Ivie</h2>
+      <p class="subtitle">Choose the right message, I sent you. Lagot ka sakin kapag mali!!</p>
+    </header>
+
+    <section class="stage">
+      <div id="mediaArea" class="media-area" aria-hidden="true">
+        <!-- images/gif injected here -->
+        <img id="sceneImage" class="scene-image" src="" alt="" />
+        <img id="angryGif" class="angry-gif" src="angry.gif" alt="angry gif" />
+      </div>
+
+      <div class="dialog">
+        <div id="sceneTitle" class="scene-title"></div>
+        <p id="sceneText" class="scene-text"></p>
+
+        <div id="choices" class="choices" role="list"></div>
+
+        <div class="controls">
+          <button id="startBtn" class="btn primary">Start 💖</button>
+          <button id="nextBtn" class="btn primary" style="display:none">Next 💌</button>
+        </div>
+      </div>
+    </section>
+
+    <footer id="finalScreen" class="final-screen" aria-hidden="true">
+      <h3>💖 I love you, My Iris — from Rouge 💖</h3>
+      <p class="final-sub">Thanks for treasuring our moments.</p>
+      <div class="final-actions">
+        <button id="replayBtn" class="btn">Play again</button>
+        <button id="shareBtn" class="btn">Copy link</button>
+      </div>
+    </footer>
+
+    <audio id="bgMusic" src="hoodie.mp3" preload="auto" loop></audio>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
