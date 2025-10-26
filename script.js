@@ -1,55 +1,15 @@
-// Story data: 10 scenes. For each scene set correct: 'A' or 'B' and image file s1..s10 in /images/
+// Story data
 const scenes = [
-  { title:'Confession', 
-    text:"The night I confessed, what did I told you?", 
-    A:"Choose someone who prioritizes you.", 
-    B:"Do you like me?", 
-    correct:'A', image:'s1.jpg' },
-  { title:'Confession', 
-    text:"After that confession, this is what I told you.", 
-    A:"I'll do my best for us, Ivie.", 
-    B:"I'll prove myself, Ivie.", 
-    correct:'B', image:'s2.jpg' },
-  { title:'Tomorrow morning', 
-    text:"Kinabukasan sinabi ko na..", 
-    A:"Ipapanalo kita.", 
-    B:"Hi loveyyy!", 
-    correct:'A', image:'s3.jpg' },
-  { title:'Hobby', 
-    text:"Kapag active ako pero 'di nakakapagreply, ano ginagawa ko?", 
-    A:"Watching reels.", 
-    B:"Playing games.", 
-    correct:'A', image:'s4.jpg' },
-  { title:'Hobby', 
-    text:"What do I always do?", 
-    A:"Pikunin ka", 
-    B:"Play games", 
-    correct:'A', image:'s5.jpg' },
-  { title:'Name',
-    text:"What's my name?",
-    A:"Shawn",
-    B:"Sean",
-    correct:'B', image:'s6.jpg' },
-  { title:'Cs', 
-    text:"What does baobei means?", 
-    A:"treasure", 
-    B:"home", 
-    correct:'A', image:'s7.jpg' },
-  { title:'Sudden', 
-    text:"Which of these did I told you?", 
-    A:"I just love the fact that there's someone who cares for me.", 
-    B:"I just love the fact that there's someone who's in love with me for being me.", 
-    correct:'B', image:'s8.jpg' },
-  { title:'Answer', 
-    text:"When you asked me, 'kaso nameet mo abnormal, ayos lang ba?'. I said?", 
-    A:"Ofc, I'm also crazy.", 
-    B:"I love your goofiness.", 
-    correct:'B', image:'s9.jpg' },
-  { title:'Confession', 
-    text:"You are my?", 
-    A:"girl", 
-    B:"Iris", 
-    correct:'B', image:'s10.jpg' }
+  { title:'Confession', text:"The night I confessed, what did I told you?", A:"Choose someone who prioritizes you.", B:"Do you like me?", correct:'A', image:'s1.jpg' },
+  { title:'Confession', text:"After that confession, this is what I told you.", A:"I'll do my best for us, Ivie.", B:"I'll prove myself, Ivie.", correct:'B', image:'s2.jpg' },
+  { title:'Tomorrow morning', text:"Kinabukasan sinabi ko na..", A:"Ipapanalo kita.", B:"Hi loveyyy!", correct:'A', image:'s3.jpg' },
+  { title:'Hobby', text:"Kapag active ako pero 'di nakakapagreply, ano ginagawa ko?", A:"Watching reels.", B:"Playing games.", correct:'A', image:'s4.jpg' },
+  { title:'Hobby', text:"What do I always do?", A:"Pikunin ka", B:"Play games", correct:'A', image:'s5.jpg' },
+  { title:'Name', text:"What's my name?", A:"Shawn", B:"Sean", correct:'B', image:'s6.jpg' },
+  { title:'Cs', text:"What does baobei means?", A:"treasure", B:"home", correct:'A', image:'s7.jpg' },
+  { title:'Sudden', text:"Which of these did I told you?", A:"I just love the fact that there's someone who cares for me.", B:"I just love the fact that there's someone who's in love with me for being me.", correct:'B', image:'s8.jpg' },
+  { title:'Answer', text:"When you asked me, 'kaso nameet mo abnormal, ayos lang ba?'. I said?", A:"Ofc, I'm also crazy.", B:"I love your goofiness.", correct:'B', image:'s9.jpg' },
+  { title:'Confession', text:"You are my?", A:"girl", B:"Iris", correct:'B', image:'s10.jpg' }
 ];
 
 const startBtn = document.getElementById('startBtn');
@@ -69,7 +29,7 @@ const heartsContainer = document.getElementById('hearts');
 let index = 0;
 let answeredCorrect = false;
 
-// generate floating hearts
+// Floating hearts
 function createHearts(){
   for(let i=0;i<12;i++){
     const s = document.createElement('span');
@@ -80,17 +40,14 @@ function createHearts(){
   }
 }
 
-// render a scene
+// Render scene
 function renderScene(i){
   const s = scenes[i];
   sceneTitle.textContent = s.title;
   sceneText.textContent = s.text;
   choicesDiv.innerHTML = '';
-
-  // hide media
   hideMedia();
 
-  // create choices
   const choiceA = document.createElement('button');
   choiceA.className = 'choice';
   choiceA.textContent = 'A — ' + s.A;
@@ -108,27 +65,25 @@ function renderScene(i){
 
   nextBtn.style.display = 'none';
   answeredCorrect = false;
+
+  // ✅ Scroll into view (fix for mobile)
+  nextBtn.scrollIntoView({behavior:'smooth', block:'center'});
 }
 
-// handle choice click
+// Handle choices
 function onChoose(e){
   const chosen = e.currentTarget.dataset.choice;
   const s = scenes[index];
-
-  // if already correct, ignore (prevent double)
   if(answeredCorrect) return;
 
   if(chosen === s.correct){
-    // correct: show image and enable Next
     e.currentTarget.classList.add('correct');
     showSceneImage(s.image);
     answeredCorrect = true;
     nextBtn.style.display = 'inline-block';
   } else {
-    // wrong: flash wrong and show angry gif above text box
     e.currentTarget.classList.add('wrong');
     showAngryGif();
-    // do not advance — she can pick again
   }
 }
 
@@ -137,7 +92,6 @@ function showSceneImage(src){
   sceneImage.src = src;
   sceneImage.alt = 'Memory screenshot';
   sceneImage.style.display = 'block';
-  // fade in
   requestAnimationFrame(()=> {
     sceneImage.style.opacity = '1';
     sceneImage.style.transform = 'translateY(0)';
@@ -151,19 +105,14 @@ function showAngryGif(){
   angryGif.style.opacity = '0';
   angryGif.style.transform = 'translateY(6px)';
   mediaArea.setAttribute('aria-hidden','false');
-
-  // animate in
   requestAnimationFrame(()=> {
     angryGif.style.opacity = '1';
     angryGif.style.transform = 'translateY(0)';
   });
-
-  // small shake on choices container
   choicesDiv.classList.add('shake');
   setTimeout(()=> choicesDiv.classList.remove('shake'), 420);
 }
 
-// hide media area images
 function hideMedia(){
   sceneImage.style.opacity = '0';
   sceneImage.style.display = 'none';
@@ -172,15 +121,15 @@ function hideMedia(){
   mediaArea.setAttribute('aria-hidden','true');
 }
 
-// start game
+// Start game
 startBtn.addEventListener('click', ()=>{
   startBtn.style.display = 'none';
-  bgMusic.play().catch(()=>{/* if blocked, user pressed start so should play */});
+  bgMusic.play().catch(()=>{});
   createHearts();
   renderScene(0);
 });
 
-// next scene
+// Next scene
 nextBtn.addEventListener('click', ()=>{
   if(!answeredCorrect) return;
   index++;
@@ -191,15 +140,12 @@ nextBtn.addEventListener('click', ()=>{
   }
 });
 
-// final screen
 function showFinal(){
   document.querySelector('.stage').style.display = 'none';
   finalScreen.classList.add('show');
   finalScreen.setAttribute('aria-hidden','false');
-  // music continues as requested
 }
 
-// replay
 replayBtn.addEventListener('click', ()=>{
   index = 0;
   finalScreen.classList.remove('show');
@@ -207,12 +153,11 @@ replayBtn.addEventListener('click', ()=>{
   renderScene(0);
 });
 
-// share (copy link)
 shareBtn.addEventListener('click', ()=>{
   navigator.clipboard.writeText(location.href).then(()=> alert('Link copied — share it with Ivie!'));
 });
 
-// small shake CSS via class (in case)
+// shake CSS
 const style = document.createElement('style');
 style.textContent = `
 .choices.shake{animation:shake .42s}
@@ -220,7 +165,7 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
-// accessibility: allow Enter key for choices and Next
+// Enter key support
 document.addEventListener('keydown',(e)=>{
   if(e.key === 'Enter'){
     const active = document.activeElement;
